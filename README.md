@@ -44,9 +44,9 @@ mawaddah-rahmah/
 
 | الإصدار | ما يأتي | لا يزال مجاني؟ |
 | --- | --- | --- |
-| **v1.0 (الحالي)** | PWA صفحي + Flutter/Hive + CI-APK + منهاج تناغم لطرفين | ✅ GitHub Pages + Actions |
-| **v1.1** | **إشعارات FCM لنصائح اليوم** (يتطلب نقرة إنشاء Firebase project في console) + أوقات صلاة/Iqamah | ✅ FCM Free |
-| **v1.2** | مزامنة اختيارية عبر **Supabase Free Tier** (`backend/schema.sql` جاهز) + ترجمات tr/ur/fr | ✅ |
+| **v1.0** | PWA صفحي + Flutter/Hive + CI-APK + منهاج تناغم لطرفين | ✅ GitHub Pages + Actions |
+| **v1.1 (الحالي)** | عميل إشعارات FCM جاهز لتفعيلك + تدقيق حرفي كامل للمصادر (18/18) + حزمة Play: `.aab` ودليل Console | ✅ CI يبني APK+AAB |
+| **v1.2** | الإرسال الفعلي «نصيحة اليوم» (تخزين tokens + scheduled sender) + مزامنة Supabase | ⏳ |
 
 ## 🧪 اختبار التناغم الزوجي
 
@@ -58,6 +58,12 @@ mawaddah-rahmah/
 ## 🔒 الخصوصية
 
 لا حسابات ولا تسجيل، لا تحليلات: التفضيلات وإجابات الاختبار في **localStorage/Hive** فقط. [سياسة الخصوصية](privacy.html).
+
+## 📚 التوثيق
+
+- [سجل تدقيق المصادر](docs/REVIEW.md) — النتائج 18/18 + جدول توقيع المراجعة البشرية (لم يُوقّع بعد).
+- [دليل إعداد Firebase](docs/firebase-setup.md) — نقرة واحدة لتفعيل الإشعارات (اختياري، في v1.2 الإرسال الفعلي).
+- [دليل Play Console](docs/play-store-guide.md) — الحساب (25$ على حسابك) + رفع `.aab` + أجوبة Data Safety.
 
 ---
 

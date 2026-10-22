@@ -54,7 +54,7 @@ const Map<String, Map<String, String>> LABELS = {
     'scoreMax': 'من 36',
     'diffTitle': 'فروق كبيرة تستحق حواراً هادئاً',
     'langOnlyAr': 'المحتوى الشرعي عربياً في v1.0؛ الترجمات لاحقاً بعد المراجعة.',
-    'version': 'v1.0.0 — يعمل كلياً بلا إنترنت',
+    'version': 'v1.1.0 — يعمل كلياً بلا إنترنت',
   },
   'en': {
     'appTitle': 'Mawaddah & Rahmah',
@@ -94,7 +94,7 @@ const Map<String, Map<String, String>> LABELS = {
     'scoreMax': 'out of 36',
     'diffTitle': 'Large gaps worth discussing',
     'langOnlyAr': 'Guidance content is Arabic in v1.0; translations later after review.',
-    'version': 'v1.0.0 — fully offline',
+    'version': 'v1.1.0 — fully offline',
   }
 };
 
