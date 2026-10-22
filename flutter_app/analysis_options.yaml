@@ -1,0 +1,8 @@
+# Keep the valuable flutter_lints set, but silence style-only complaints that
+# don't affect correctness (we keep UPPER_CONST map name and string + concatenation).
+include: package:flutter_lints/flutter.yaml
+
+linter:
+  rules:
+    constant_identifier_names: false
+    prefer_interpolation_to_compose_strings: false
