@@ -1,0 +1,60 @@
+name: Android APK (Mawaddah & Rahmah)
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.0'
+          channel: stable
+          cache: true
+
+      # The repo keeps lib/ + assets + pubspec only; android/ scaffolding is
+      # generated here so we never hand-maintain gradle files.
+      - name: Scaffold Android platform
+        run: |
+          cd flutter_app
+          flutter create . --platforms android --project-name mawaddah --org ly.mawaddah --no-pub
+
+      - name: Pub get
+        run: |
+          cd flutter_app
+          flutter pub get
+
+      - name: Analyze (info-level allowed, errors fail)
+        run: |
+          cd flutter_app
+          flutter analyze --no-fatal-warnings --no-fatal-infos
+
+      - name: Build release APK
+        run: |
+          cd flutter_app
+          flutter build apk --release
+
+      - name: Upload build artifact (every run)
+        uses: actions/upload-artifact@v4
+        with:
+          name: mawaddah-apk
+          path: flutter_app/build/app/outputs/flutter-apk/app-release.apk
+
+      - name: Create GitHub release (tag pushes only)
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: flutter_app/build/app/outputs/flutter-apk/app-release.apk
+          name: Mawaddah & Rahmah ${{ github.ref_name }}
+          body: |
+            إصدار APK من «مودة ورحمة» — تثبيت مباشر (Enable unknown sources عند التثبيت).
+            Honest build log: content assets (guidance/tips/harmony) are bundled inside the APK.

@@ -1,0 +1,29 @@
+{
+  "name": "مودة ورحمة",
+  "short_name": "مودة",
+  "description": "مستشار الزوجية على سنّة: توعية عملية من آيات وأحاديث مخرّجة + اختبار تناغم، يعمل بلا إنترنت.",
+  "id": "mawaddah-rahmah",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "dir": "rtl",
+  "lang": "ar",
+  "background_color": "#F2E8D5",
+  "theme_color": "#55613A",
+  "categories": ["lifestyle", "education"],
+  "icons": [
+    {
+      "src": "./icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+# Flutter/Dart
+.dart_tool/
+.packages
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+pubspec.lock
+
+# Android scaffolding is generated in CI (`flutter create`) — keep it out of git
+android/
+ios/
+web/
+windows/
+macos/
+linux/
+
+# IDE
+.idea/
+.vscode/
+*.iml

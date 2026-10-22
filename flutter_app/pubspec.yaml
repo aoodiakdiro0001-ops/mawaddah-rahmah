@@ -1,0 +1,22 @@
+name: mawaddah
+description: "Mawaddah & Rahmah — Islamic marital guidance. Local-first (Hive), Arabic-first, honest cited sources."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.3.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/content/

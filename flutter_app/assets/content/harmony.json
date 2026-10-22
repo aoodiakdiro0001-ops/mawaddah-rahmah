@@ -1,0 +1,193 @@
+{
+  "version": "1.0",
+  "language": "ar",
+  "max_score": 36,
+  "modes_note": "وضعية ذاتي (أجب لنفسك) ووضعية الطرفين (في الهاتف نفسه: يجيب كل طرف ثم تُقارن النتائج).",
+  "answer_scale": [
+    {
+      "v": 3,
+      "ar": "كثيراً"
+    },
+    {
+      "v": 2,
+      "ar": "أحياناً"
+    },
+    {
+      "v": 1,
+      "ar": "نادراً"
+    },
+    {
+      "v": 0,
+      "ar": "لا أبداً"
+    }
+  ],
+  "questions": [
+    {
+      "id": "q1",
+      "theme": "trust",
+      "ar": "أحدث زوجي/زوجتي بمخاوف قلبي دون خوف سخرية."
+    },
+    {
+      "id": "q2",
+      "theme": "respect",
+      "ar": "أختلف معه دون ألفاظ جارحة."
+    },
+    {
+      "id": "q3",
+      "theme": "listening",
+      "ar": "أشعر أن كلامي يُحفَظ بعناية عند الاستماع."
+    },
+    {
+      "id": "q4",
+      "theme": "money",
+      "ar": "اتفقنا على ميزانية المصروف بدل التهم."
+    },
+    {
+      "id": "q5",
+      "theme": "gratitude",
+      "ar": "أقول شكراً على أعماله الصغيرة في الأسبوع."
+    },
+    {
+      "id": "q6",
+      "theme": "temper",
+      "ar": "أضبط غضبي في الخلاف ولا أقول كلاماً نادماً عليه."
+    },
+    {
+      "id": "q7",
+      "theme": "inlaws",
+      "ar": "علاقتي بأهل زوجي/زوجتي بدون سخط؟"
+    },
+    {
+      "id": "q8",
+      "theme": "time",
+      "ar": "خصصنا وقتاً أسبوعياً خاصاً للزوجين."
+    },
+    {
+      "id": "q9",
+      "theme": "gratitude",
+      "ar": "قلت كلمة تقدير صريحة هذا الأسبوع."
+    },
+    {
+      "id": "q10",
+      "theme": "intimacy",
+      "ar": "أولية أمسياتنا لبعضنا لا للهاتف."
+    },
+    {
+      "id": "q11",
+      "theme": "repair",
+      "ar": "بعد الخلاف يتقدم أحدنا للمصالحة سريعاً."
+    },
+    {
+      "id": "q12",
+      "theme": "faith",
+      "ar": "نتشارك ذكر الله معاً في بيتنا."
+    }
+  ],
+  "themes": [
+    {
+      "id": "trust",
+      "ar": "الثقة والصدق",
+      "nodes": [
+        "listening-mockery"
+      ]
+    },
+    {
+      "id": "respect",
+      "ar": "احترام الاختلاف",
+      "nodes": [
+        "listening-mockery"
+      ]
+    },
+    {
+      "id": "listening",
+      "ar": "الإنصات والفهم",
+      "nodes": [
+        "listening-husband-listens",
+        "listening-wife-timing"
+      ]
+    },
+    {
+      "id": "money",
+      "ar": "الشراكة المالية",
+      "nodes": [
+        "rights-money-partnership",
+        "rights-husband-nafaqa",
+        "rights-wife-financial-right"
+      ]
+    },
+    {
+      "id": "gratitude",
+      "ar": "الشكر والتقدير",
+      "nodes": [
+        "affection-husband-appreciation",
+        "affection-wife-effort"
+      ]
+    },
+    {
+      "id": "temper",
+      "ar": "ضبط الغضب",
+      "nodes": [
+        "anger-husband-seethes",
+        "anger-wife-softens"
+      ]
+    },
+    {
+      "id": "inlaws",
+      "ar": "الحدود العائلية",
+      "nodes": [
+        "inlaws-respect-her-family",
+        "inlaws-family-boundaries"
+      ]
+    },
+    {
+      "id": "time",
+      "ar": "الوقت للأولى",
+      "nodes": [
+        "time-husband-friends-first",
+        "time-wife-phone-nights",
+        "time-long-travel"
+      ]
+    },
+    {
+      "id": "intimacy",
+      "ar": "القرب والتواصل",
+      "nodes": [
+        "affection-marital-warmth"
+      ]
+    },
+    {
+      "id": "repair",
+      "ar": "المصالحة السريعة",
+      "nodes": [
+        "anger-husband-seethes"
+      ]
+    },
+    {
+      "id": "faith",
+      "ar": "ذكر الله معاً",
+      "nodes": []
+    }
+  ],
+  "bands": [
+    {
+      "min": 30,
+      "ar": "تناغم عالٍ: استمروا في هذه العادات المزدهرة.",
+      "nodes_hint": "راجع فرِق الطرفين إن كانا في وضع الطرفين."
+    },
+    {
+      "min": 20,
+      "ar": "تنمو المودة — ناقشا أضعف الأقسام الأدنى معاً.",
+      "nodes_hint": "ابدأوا بالعقدتين اللتين أوصى بمنطقهما الأضعف."
+    },
+    {
+      "min": 12,
+      "ar": "يلزم عمل مقصود: اضعوا منهجاً أسبوعياً صغيراً.",
+      "nodes_hint": "اخترا عقدتين فقط للتنفيذ هذا الشهر."
+    },
+    {
+      "min": 0,
+      "ar": "اطلبوا مشورة مختصة + ابدوا بمنقطة واحدة كل شهر.",
+      "nodes_hint": "لا تُراكموا النقاط: واحدة كافٍ للانطلاق."
+    }
+  ]
+}
