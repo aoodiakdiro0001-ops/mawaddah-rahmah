@@ -142,8 +142,6 @@ class MawApp extends StatelessWidget {
       useMaterial3: true,
       colorScheme: ColorScheme.fromSeed(
         seedColor: olive,
-        background: beige,
-        surface: const Color(0xFFFDFBF5),
         primary: olive,
         secondary: navy,
       ),

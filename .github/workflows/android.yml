@@ -27,11 +27,18 @@ jobs:
         run: |
           cd flutter_app
           flutter create . --platforms android --project-name mawaddah --org ly.mawaddah --no-pub
+          # discard the generated default widget_test (it references MyApp we don't ship)
+          rm -f test/widget_test.dart
 
       - name: Pub get
         run: |
           cd flutter_app
           flutter pub get
+
+      - name: Unit tests (content layer smoke)
+        run: |
+          cd flutter_app
+          flutter test test/smoke_test.dart
 
       - name: Analyze (info-level allowed, errors fail)
         run: |
