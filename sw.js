@@ -1,10 +1,11 @@
 /* Mawaddah & Rahmah — offline-first service worker (barancook-style, minimal & honest). */
-const CACHE = 'mw-v1';
+const CACHE = 'mw-v1-1';
 const ASSETS = [
   './',
   './index.html',
   './styles.css',
   './app.js',
+  './firebase-config.js',
   './manifest.webmanifest',
   './privacy.html',
   './data/guidance.json',

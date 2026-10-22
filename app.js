@@ -59,6 +59,16 @@
       about: 'عن التطبيق',
       changeProf: 'تغيير النوع واللغة',
       version: 'الإصدار',
+      notif: 'الإشعارات',
+      notifBtn: 'تفعيل إشعارات نصيحة اليوم (تجريبي)',
+      notifNoCfg: 'إعداد FCM غير مفعّل بعد — الدليل: docs/firebase-setup.md. التطبيق يعمل كلياً بلا إنترنت وبدون هذه الميزة.',
+      notifDenied: 'الإذن مرفوض؛ يمكن تغييره من إعدادات هذا الموقع في المتصفح.',
+      notifOk: 'تم التفعيل — رمز جهازك:',
+      notifCopy: 'انسخ الرمز',
+      notifCopied: 'نُسخ الرمز.',
+      notifWait: 'جارٍ التفعيل…',
+      notifErr: 'تعذّر التفعيل: ',
+      notifHint: 'الرمز يُسجَّل في جهازك فقط. الإرسال الفعلي «نصيحة اليوم» يأتي في v1.2 عبر خادم مجاني — لا إرسال من هذه الصفحة.',
       disclaimer: 'تنبيه أمانة: المحتوى توعية عامة وليس فتوى. آيات مخرّجة بحرفيتها وأحاديث صحاح بتخريجها. لكل حالة خاصة استشر جهة تبليغ شرعي معتمدة، ويُراجع المحتوى عالماً شرعياً.',
       sources: 'مصادر النصوص',
       quranLink: 'الآية',
@@ -113,6 +123,16 @@
       about: 'About',
       changeProf: 'Change gender & language',
       version: 'Version',
+      notif: 'Notifications',
+      notifBtn: 'Enable daily-tip notifications (beta)',
+      notifNoCfg: 'FCM config not set yet — guide: docs/firebase-setup.md. The app works fully offline without this.',
+      notifDenied: 'Permission denied; change it from this site\u2019s settings in your browser.',
+      notifOk: 'Enabled \u2014 your device token:',
+      notifCopy: 'Copy token',
+      notifCopied: 'Token copied.',
+      notifWait: 'Enabling\u2026',
+      notifErr: 'Enable failed: ',
+      notifHint: 'Token stays on this device only. Actual daily-tip sending arrives in v1.2 via a free server \u2014 nothing is sent from this page.',
       disclaimer: 'Honesty notice: general education, not fatwa. Qur\u2019an quoted verbatim; hadith cited from the authentic collections with references. For private cases consult a qualified scholar.',
       sources: 'Text sources',
       quranLink: 'The verse',
@@ -564,6 +584,10 @@
       '<div class="mode-row">' +
       '<button id="chgProf">' + esc(T('changeProf')) + '</button>' +
       '</div></div>' +
+      '<div class="card"><div class="tip-kicker">🔔 ' + esc(T('notif')) + '</div>' +
+      '<div class="mode-row"><button id="fcmBtn">' + esc(T('notifBtn')) + '</button></div>' +
+      '<div id="fcmOut" class="tip-text" style="font-size:12px;margin-top:8px"></div>' +
+      '<div class="tip-text" style="font-size:11px;color:var(--navy-soft)">' + esc(T('notifHint')) + '</div></div>' +
       '<div class="card"><div class="tip-kicker">🧾 ' + esc(T('about')) + '</div>' +
       '<div class="tip-text" style="font-size:13.5px">' + esc(T('disclaimer')) + '</div>' +
       '<div class="tip-text" style="font-size:12px;margin-top:8px">📖 ' + esc(S.data.sources_note_ar || '') + '</div>' +
@@ -574,9 +598,85 @@
       '<a href="privacy.html">🔒 ' + esc(T('privacy')) + '</a>' +
       '</div></div>' +
       '<div class="card"><div class="tip-text" style="font-size:12px;color:var(--navy-soft)">' +
-      esc(T('version')) + ': v1.0.0 — ' + n + ' ' + esc(T('nodes')) + ' · ' + S.tips.length + ' tips · ' + S.test.questions.length + ' Q</div></div>';
+      esc(T('version')) + ': v1.1.0 — ' + n + ' ' + esc(T('nodes')) + ' · ' + S.tips.length + ' tips · ' + S.test.questions.length + ' Q</div></div>';
     document.getElementById('chgProf').addEventListener('click', function () {
       S.gender = null; S.screen = 'home'; save(); renderOnboarding();
+    });
+    document.getElementById('fcmBtn').addEventListener('click', function () {
+      enableFcm(document.getElementById('fcmOut'));
+    });
+  }
+
+  /* ---------- notifications (FCM v1.1 — optional, device-local token) ---------- */
+
+  function loadScriptOnce(src) {
+    return new Promise(function (res, rej) {
+      var s = document.createElement('script');
+      s.src = src;
+      s.onload = function () { res(true); };
+      s.onerror = function () { rej(new Error('load failed: ' + src)); };
+      document.head.appendChild(s);
+    });
+  }
+
+  function enableFcm(out) {
+    var cfg = window.MW_FIREBASE_CONFIG || null;
+    if (!cfg || !cfg.apiKey) {
+      out.textContent = '⚠️ ' + T('notifNoCfg');
+      return;
+    }
+    if (!('Notification' in window) || !('serviceWorker' in navigator)) {
+      out.textContent = '⚠️ ' + T('notifErr') + 'Notification/SW API';
+      return;
+    }
+    out.textContent = T('notifWait');
+    Notification.requestPermission().then(function (p) {
+      if (p !== 'granted') {
+        out.textContent = '⚠️ ' + T('notifDenied');
+        return;
+      }
+      loadScriptOnce('https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js')
+        .then(function () {
+          return loadScriptOnce('https://www.gstatic.com/firebasejs/10.14.1/firebase-messaging-compat.js');
+        })
+        .then(function () {
+          try { firebase.initializeApp(cfg); } catch (e) { /* dup init fine */ }
+          return navigator.serviceWorker.register('firebase-messaging-sw.js',
+            { scope: './fcmscope/' }).then(function (reg) {
+              return firebase.messaging().getToken({
+                serviceWorkerRegistration: reg,
+                vapidKey: cfg.vapidKey || undefined
+              });
+            });
+        })
+        .then(function (token) {
+          if (!token) throw new Error('empty token');
+          try { localStorage.setItem('mw_fcm_token', token); } catch (e) { /* quiet */ }
+          out.textContent = T('notifOk');
+          var t = document.createElement('div');
+          t.className = 'tip-text';
+          t.style.marginTop = '6px';
+          t.style.fontSize = '11px';
+          t.style.wordBreak = 'break-all';
+          t.textContent = token;
+          var cp = document.createElement('button');
+          cp.textContent = T('notifCopy');
+          cp.style.marginTop = '6px';
+          cp.addEventListener('click', function () {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(token).then(function () {
+                out.textContent = T('notifCopied');
+              });
+            } else {
+              out.textContent = token;
+            }
+          });
+          out.parentNode.appendChild(t);
+          out.parentNode.appendChild(cp);
+        })
+        .catch(function (e) {
+          out.textContent = '⚠️ ' + T('notifErr') + e.message;
+        });
     });
   }
 
