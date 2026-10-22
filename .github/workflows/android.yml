@@ -35,6 +35,14 @@ jobs:
           flutter create . --platforms android --project-name mawaddah --org ly.mawaddah --no-pub
           # discard the generated default widget_test (it references MyApp we don't ship)
           rm -f test/widget_test.dart
+          # Transitive deps (androidx.annotation 1.9.x, kotlin-stdlib 1.9.24) ship
+          # Kotlin metadata 1.9.0 that an old template Kotlin plugin (1.7.10) can't
+          # read. The pin lives either in classic android/build.gradle or
+          # declarative android/settings.gradle — align both when present.
+          sed -i.bak "s/ext.kotlin_version *= *'[^']*'/ext.kotlin_version = '1.9.24'/" android/build.gradle
+          sed -i.bak 's/org.jetbrains.kotlin.android" version "[^"]*"/org.jetbrains.kotlin.android" version "1.9.24"/' android/settings.gradle
+          rm -f android/build.gradle.bak android/settings.gradle.bak
+          grep -Hn "kotlin_version\|kotlin.android" android/build.gradle android/settings.gradle || true
 
       - name: Pub get
         run: |
